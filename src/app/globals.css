@@ -1,26 +1,225 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: "Bangers", "Arial Black", sans-serif;
+  --font-body: "Nunito", ui-rounded, system-ui, sans-serif;
+
+  --color-ink: #191924;
+  --color-paper: #f5f3ec;
+  --color-crimson: #d62839;
+  --color-royal: #2f6bff;
+  --color-gold: #f2b705;
+  --color-violet: #6d28d9;
+  --color-mint: #d7f0d8;
+  --color-blush: #f6d4da;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5f3ec;
+  --foreground: #191924;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --background: #14141c;
+  --foreground: #f4f1e8;
+  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  height: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  /* faint manga screentone */
+  background-image: radial-gradient(#1919240d 1px, transparent 1px);
+  background-size: 16px 16px;
 }
+
+.font-comic {
+  font-family: var(--font-display);
+  letter-spacing: 0.03em;
+}
+
+/* Refined anime panel: thin ink frame, tight offset shadow */
+.comic-card {
+  background: white;
+  border: 2px solid #191924;
+  border-radius: 8px;
+  box-shadow: 5px 5px 0 #191924;
+  position: relative;
+}
+
+/* Sharp action button, no tilt */
+.comic-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 2px solid #191924;
+  border-radius: 6px;
+  box-shadow: 3px 3px 0 #191924;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+.comic-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #191924;
+  filter: brightness(1.04);
+}
+.comic-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #191924;
+}
+.comic-btn:disabled {
+  opacity: 0.55;
+  transform: none;
+  cursor: not-allowed;
+}
+
+.comic-border {
+  border: 2px solid #191924;
+}
+
+/* Compact speech panel */
+.speech-bubble {
+  position: relative;
+  background: white;
+  border: 2px solid #191924;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 #191924;
+}
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  left: 26px;
+  bottom: -9px;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-right: 2px solid #191924;
+  border-bottom: 2px solid #191924;
+  transform: rotate(45deg);
+}
+
+/* Hero: yellow sun disc over fine speed lines, restrained */
+.halftone-hero {
+  background:
+    repeating-linear-gradient(
+      -55deg,
+      transparent 0 18px,
+      #19192406 18px 19px
+    ),
+    radial-gradient(circle at 88% 12%, #f2b70533 0 150px, transparent 151px),
+    radial-gradient(circle at 8% 90%, #2f6bff1f 0 170px, transparent 171px),
+    #f5f3ec;
+}
+
+.anime-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 2px solid #191924;
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  font-weight: 800;
+  font-size: 0.7rem;
+  box-shadow: 2px 2px 0 #191924;
+  letter-spacing: 0.08em;
+}
+
+/* Thin rule used above the map */
+.speed-lines {
+  background: repeating-linear-gradient(
+    -55deg,
+    #191924 0 2px,
+    transparent 2px 10px
+  );
+  height: 6px;
+  opacity: 0.7;
+}
+
+/* GSAP initial states */
+.gsap-reveal {
+  opacity: 0;
+}
+.gsap-float {
+  will-change: transform;
+}
+
+/* Editor frame */
+.monaco-comic {
+  border: 2px solid #191924;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 5px 5px 0 #191924;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #f5f3ec; }
+::-webkit-scrollbar-thumb { background: #191924; border-radius: 6px; border: 2px solid #f5f3ec; }
+
+/* ---------- Dark mode: same anime system, night palette ---------- */
+.dark body {
+  background-image: radial-gradient(#ffffff12 1px, transparent 1px);
+}
+
+.dark .comic-card {
+  background: #20202c;
+  border-color: #0b0b13;
+  box-shadow: 5px 5px 0 #0b0b13;
+  color: var(--foreground);
+}
+
+.dark .comic-btn {
+  border-color: #0b0b13;
+  box-shadow: 3px 3px 0 #0b0b13;
+}
+.dark .comic-btn:hover { box-shadow: 4px 4px 0 #0b0b13; }
+.dark .comic-btn:active { box-shadow: 1px 1px 0 #0b0b13; }
+
+.dark .speech-bubble {
+  background: #20202c;
+  border-color: #0b0b13;
+  box-shadow: 4px 4px 0 #0b0b13;
+}
+.dark .speech-bubble::after {
+  background: #20202c;
+  border-right-color: #0b0b13;
+  border-bottom-color: #0b0b13;
+}
+
+.dark .halftone-hero {
+  background:
+    repeating-linear-gradient(
+      -55deg,
+      transparent 0 18px,
+      #ffffff08 18px 19px
+    ),
+    radial-gradient(circle at 88% 12%, #f2b70540 0 150px, transparent 151px),
+    radial-gradient(circle at 8% 90%, #2f6bff2e 0 170px, transparent 171px),
+    #14141c;
+}
+
+.dark .monaco-comic {
+  border-color: #0b0b13;
+  box-shadow: 5px 5px 0 #0b0b13;
+}
+
+/* White-ink buttons and cards invert to night surfaces */
+.dark .comic-btn.bg-white {
+  background-color: #262633;
+  color: var(--foreground);
+}
+.dark .comic-card.bg-white,
+.dark .comic-card.bg-white\/70 {
+  background-color: rgba(32, 32, 44, 0.92);
+}
+
+.dark ::-webkit-scrollbar-track { background: #14141c; }
+.dark ::-webkit-scrollbar-thumb { background: #3a3a4d; border: 2px solid #14141c; }

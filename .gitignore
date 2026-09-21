@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# generated gemini chapters
+/.generated-levels/
+
 # production
 /build
 
